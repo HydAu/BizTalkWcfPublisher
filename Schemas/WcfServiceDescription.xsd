@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.microsoft.com/BizTalk/2006/01/Adapter/Wcf/Publishing" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/BizTalk/2006/01/Adapter/Wcf/Publishing" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="WcfServiceDescription" nillable="true" type="tns:WcfServiceDescription" />
+  <xs:complexType name="WcfServiceDescription">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="LocationSettings" type="tns:LocationSettings" />
+      <xs:element minOccurs="0" maxOccurs="1" name="ApplicationSettings" type="tns:ApplicationSettings" />
+      <xs:element minOccurs="0" maxOccurs="1" name="AdapterSettings" type="tns:AdapterSettings" />
+      <xs:element minOccurs="0" maxOccurs="1" name="MetadataSettings" type="tns:MetadataSettings" />
+      <xs:element minOccurs="0" maxOccurs="1" name="WcfServices" type="tns:ArrayOfWcfService" />
+    </xs:sequence>
+    <xs:attribute name="Name" type="xs:string" />
+    <xs:attribute name="Description" type="xs:string" />
+    <xs:attribute name="TargetNamespace" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="LocationSettings">
+    <xs:attribute name="Location" type="xs:string" />
+    <xs:attribute name="Overwrite" type="xs:boolean" use="required" />
+    <xs:attribute name="AuthAnonymous" type="xs:boolean" use="required" />
+    <xs:attribute name="AppPoolId" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="ApplicationSettings">
+    <xs:attribute name="CreateReceiveLocations" type="xs:boolean" use="required" />
+    <xs:attribute name="ApplicationName" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="AdapterSettings">
+    <xs:attribute name="AdapterName" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="MetadataSettings">
+    <xs:attribute name="EnableMetadata" type="xs:boolean" use="required" />
+    <xs:attribute name="MetadataOnly" type="xs:boolean" use="required" />
+    <xs:attribute name="ReceiveLocationName" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="ArrayOfWcfService">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WcfService" nillable="true" type="tns:WcfService" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="WcfService">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="WcfOperations" type="tns:ArrayOfWcfOperation" />
+    </xs:sequence>
+    <xs:attribute name="Name" type="xs:string" />
+    <xs:attribute name="Description" type="xs:string" />
+  </xs:complexType>
+  <xs:complexType name="ArrayOfWcfOperation">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WcfOperation" nillable="true" type="tns:WcfOperation" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="WcfOperation">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="WcfMessages" type="tns:ArrayOfWcfMessage" />
+    </xs:sequence>
+    <xs:attribute name="Name" type="xs:string" />
+    <xs:attribute name="Description" type="xs:string" />
+    <xs:attribute name="Flow" type="tns:OperationFlow" use="required" />
+  </xs:complexType>
+  <xs:complexType name="ArrayOfWcfMessage">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="WcfMessage" nillable="true" type="tns:WcfMessage" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="WcfMessage">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="WcfMessageType" type="tns:WcfMessageType" />
+    </xs:sequence>
+    <xs:attribute name="Name" type="xs:string" />
+    <xs:attribute name="Description" type="xs:string" />
+    <xs:attribute name="Direction" type="tns:WcfMessageDirection" use="required" />
+  </xs:complexType>
+  <xs:complexType name="WcfMessageType">
+    <xs:attribute name="Category" type="tns:CategoryType" use="required" />
+    <xs:attribute name="TypeName" type="xs:string" />
+    <xs:attribute name="AssemblyName" type="xs:string" />
+    <xs:attribute name="AssemblyLocation" type="xs:string" />
+    <xs:attribute name="TargetNamespace" type="xs:string" />
+    <xs:attribute name="RootName" type="xs:string" />
+    <xs:attribute name="IsAnyType" type="xs:boolean" use="required" />
+    <xs:attribute name="IsEnvelope" type="xs:boolean" use="required" />
+  </xs:complexType>
+  <xs:simpleType name="CategoryType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="ClrType" />
+      <xs:enumeration value="XsdType" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="WcfMessageDirection">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Input" />
+      <xs:enumeration value="Output" />
+      <xs:enumeration value="Fault" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OperationFlow">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="OneWay" />
+      <xs:enumeration value="Notification" />
+      <xs:enumeration value="RequestResponse" />
+      <xs:enumeration value="SolicitResponse" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
